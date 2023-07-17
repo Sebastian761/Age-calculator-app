@@ -91,7 +91,7 @@ export const Calculator = () => {
                     <div className='button__container'>
                         <hr className='divider' />
                         <button onClick={handleSubmit}>
-                            <img src='/src/assets/down-arrow.png' className='arrow__icon'></img>
+                            <img src='./src/assets/down-arrow.png' className='arrow__icon'></img>
                         </button>
                     </div>
                 </form>
