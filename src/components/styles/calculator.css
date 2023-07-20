@@ -125,6 +125,13 @@ body {
     color: var(--purple);
 }
 
+.error {
+    display: block;
+    margin-top: 4px;
+    color: var(--light-red);
+    font-style: italic;
+}
+
 @media (max-width: 720px) {
     .age {
         font-size: 4rem;

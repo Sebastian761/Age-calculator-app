@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import './styles/calculator.css'
 
 export const Calculator = () => {
@@ -11,6 +11,10 @@ export const Calculator = () => {
     const [monthAge, setMonthAge] = useState('--')
     const [yearAge, setYearyAge] = useState('--')
 
+    const [dayError, setDayError] = useState('')
+    const [monthError, setMonthError] = useState('')
+    const [yearError, setYearError] = useState('')
+
 
     const date  = new Date()
     let day = date.getDate()
@@ -19,26 +23,31 @@ export const Calculator = () => {
 
     const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
+    function changeColor() {
+        style = {
+            borderColor: 'red'
+        }
+    }
+
     function validate() {
         const inputs = document.querySelectorAll("input")
+        
         let validator = true
         inputs.forEach((i) => {
-            const parent = i.parentElement
-            if(!i.value) {
-                i.style.borderColor = 'red'
-                parent.querySelector("small").innerText="This field is required."
+            if (dayValue < 1 || dayValue > 31) {
+                setDayError('Must be a valid day')
                 validator = false
-            } else if (monthValue >12) {
-                monthValue.style.borderColor = 'red'
-                monthValue.parent.querySelector("small").innerText="Must be a valid number."
+            } else if (monthValue < 1 || monthValue > 12) {
                 validator = false
-            } else if (dayValue > 31) {
-                dayValue.style.borderColor = 'red'
-                dayValue.parentelement.querySelector("small").innerText="Must be a valid number."
+                setMonthError('Must be a valid month')
+            } else if (yearValue > year){
+                validator = false
+                setYearError('Must be in the past')
             } else {
-                i.style.borderColor = "black"
-                parent.querySelector("small").innerText = ""
                 validator = true
+                setDayError('')
+                setMonthError('')
+                setYearError('')
             }
         })
         return validator
@@ -75,17 +84,19 @@ export const Calculator = () => {
                         <div className='input__container'>
                             <label htmlFor='day'>DAY</label>
                             <input type="number" required={true} name='day' placeholder='DD'  onChange={(event) => setDayValue(event.target.value)}/>
-                            <small></small>
+                            <small className='error' style={{if (dayError) {
+                                changeColor()
+                            }}}>{dayError}</small>
                         </div>
                         <div className='input__container'>
                             <label htmlFor="month">MONTH</label>
                             <input type="number" required={true}  placeholder='MM' onChange={(event) => setMonthValue(event.target.value)}/>
-                            <small></small>
+                            <small className='error' >{monthError}</small>
                         </div>
                         <div className='input__container'>
                             <label htmlFor="year">YEAR</label>
                             <input type="number" required={true}   placeholder='YYYY' onChange={(event) => setYearValue(event.target.value)}/>
-                            <small></small>
+                            <small className='error' >{yearError}</small>
                         </div>
                     </div>
                     <div className='button__container'>
